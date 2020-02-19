@@ -35,7 +35,7 @@
                                 </ul>
 							</nav>
                         </div>
-                        <!-- Espace de post -->				  
+                        <!-- Espace de post -->
 						<div class="padding">
 							<div class="full col-sm-9">
 								 <!-- main col left --> 
@@ -44,10 +44,10 @@
 									  <div class="well"> 
 										   <form class="form-horizontal" role="form" method="POST">
 											<h4>Quoi de neuf ?</h4>
-												<textarea class="form-control" placeholder="Commentez votre post"></textarea>
+												<textarea class="form-control" placeholder="Commentez votre post" name="txtaCommentaire"></textarea>
 												<form action="file-upload.php" method="post" enctype="multipart/form-data">													
 													<input class="btn btn-primary pull-right" type="submit" name="btnPost" value="Poster" style="margin-top: 4%;"/>
-													<input name="userfile[]" type="file" style="margin-top: 5%;"/><br/>
+													<input name="userFiles[]" accept="image/jpeg, image/png" type="file" style="margin-top: 5%;" multiple/><br/>
 												</form>
 										  	</form>
 									  </div>
