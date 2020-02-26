@@ -41,15 +41,13 @@
 								 <!-- main col left --> 
 								 <div class="col-sm-5" style="margin-left: 28%;">
                                       <!-- GARDER POUR POST -->
-									  <div class="well"> 
-										   <form class="form-horizontal" role="form" method="POST">
-											<h4>Quoi de neuf ?</h4>
-												<textarea class="form-control" placeholder="Commentez votre post" name="txtaCommentaire"></textarea>
-												<form action="file-upload.php" method="post" enctype="multipart/form-data">													
-													<input class="btn btn-primary pull-right" type="submit" name="btnPost" value="Poster" style="margin-top: 4%;"/>
-													<input name="userFiles[]" accept="image/jpeg, image/png" type="file" style="margin-top: 5%;" multiple/><br/>
-												</form>
-										  	</form>
+									  <div class="well"> 										   
+											<h4>Quoi de neuf ?</h4>										
+											<form action="post.php" method="post" enctype="multipart/form-data">	
+												<textarea class="form-control" placeholder="Commentez votre post" name="txtaCommentaire"></textarea>											
+												<input class="btn btn-primary pull-right" type="submit" name="btnPost" value="Poster" style="margin-top: 4%;"/>
+												<input name="userFiles[]" accept="image/jpeg, image/png, image/gif" type="file" style="margin-top: 5%;" multiple/><br/>
+											</form>										  	
 									  </div>
 								  </div><!-- /col-sm-5 -->
 							</div><!-- /col-9 -->

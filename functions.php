@@ -1,4 +1,6 @@
 <?php
+$uploadFolder = 'uploadedFiles';
+
 // Création de l'object PDO (Singleton)
 // Utilisation du même connecteur pour chaque requêtes
 function ConnectDB(){
@@ -16,66 +18,52 @@ function ConnectDB(){
     return $db;
 }
 
-function ImportImg(){
+// Insert les données du post dans la base de données
+function addPost($commentaire, $mediaType, $mediaName){
+    $db = ConnectDB();
 
-}
-
-// TESTER
-/*function addPost($titre, $description, $typeMedia, $nomFichier){
-    $sql = "INSERT INTO Post(titrePost, descriptionPost, dateCreationPost, dateModificationPost) VALUES(:titre, :descr, :dateCrea, :dateModif)";
-    $req = Db()->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
+    // Table post
+    $sql = "INSERT INTO post (`commentaire`, `creationDate`, `modificationDate`) VALUES(:commentaire, :dateCrea, :dateModif)";
+    $req = $db->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
     $req->execute(
       array(
-         'titrePost' => $titre,
-         'descriptionArticle' => $description,
+         'commentaire' => $commentaire,
          'dateCrea' => date("Y-m-d H:i:s"),
          'dateModif' => date("Y-m-d H:i:s")
          )
      );
-    $id = Db()->lastInsertId();
+    $id = $db->lastInsertId();
 
-
-    $sql = "INSERT INTO Media(typeMedia, nomFichierMedia, dateCreationMedia, dateModificationMedia, idPost) VALUES(:typeMedia, :nomFichier, :dateCrea, :dateModif, :post)";
-    $req = Db()->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
-    $req->execute(
-      array(
-         'typeMedia' => $typeMedia,
-         'nomFichier' => $nomFichier,
-         'dateCrea' => date("Y-m-d H:i:s"),
-         'dateModif' => date("Y-m-d H:i:s"),
-         'post' => $id
-         )
-     );   
-}*/
-
-
-// PAS BON
-function Post($mediaType, $mediaName, $createDate, $editMedia){
-    $db = ConnectDB();
-    $sql = $db->prepare("INSERT INTO post (`commentaire`, `creationDate`, `modificationDate`) VALUES (:idPost, :commentaire, :creationDate, :modificationDate)");
-    $sql->execute(array(
-        ':commentaire' => $mediaName,
-        ':creationDate' => $createDate,
-        ':modificationDate' => $editMedia,
-    ));
-
-    /*$sql = $db->prepare("INSERT INTO media (`typeMedia`, `nomMedia`, `creationDate`, `idPost`) VALUES (:typeMedia, :nomMedia, :creationDate)");
-    $sql->execute(array(
-        ':typeMedia' => $mediaType,
-        ':nomMedia' => $mediaName,
-        ':creationDate' => $createDate,
-        ':creationDate' => $idPost,
-    ));*/
+    // Table media
+    $sql = "INSERT INTO media (`typeMedia`, `nomMedia`, `creationDate`, `modificationDate`, `post_idPost`) VALUES(:typeMedia, :nomMedia, :dateCrea, :dateModif, :post)";
+    for ($i=0; $i < count($mediaName); $i++) {
+        $req = $db->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
+        $req->execute(
+            array(
+            'typeMedia' => $mediaType[$i],
+            'nomMedia' => $mediaName[$i],
+            'dateCrea' => date("Y-m-d H:i:s"),
+            'dateModif' => date("Y-m-d H:i:s"),
+            'post' => $id
+            )
+        );   
+    }    
 }
 
+// Appelle la méthode qui envoie le post dans la base de données
 if(filter_has_var(INPUT_POST, "btnPost")){
     $commentaire = filter_input(INPUT_POST, "txtaCommentaire", FILTER_SANITIZE_STRING);
-    $date = new DateTime();
-    echo $date->format('d-m-Y');
-    Post($commentaire, $date, $date);
+    $typeMedia = $_FILES['userFiles']['type'];
+    $nomMedia = $_FILES['userFiles']['name'];
+    addPost($commentaire, $typeMedia, $nomMedia);
+    
+    // Déplace le ou les fichiers dans un dossier
+    foreach ($_FILES["userFiles"]["error"] as $key => $error) {
+        if ($error == UPLOAD_ERR_OK) {
+            $tmp_name = $_FILES["userFiles"]["tmp_name"][$key];
+            $name = basename($_FILES["userFiles"]["name"][$key]);
+            move_uploaded_file($tmp_name, "$uploadFolder/$name");
+        }
+    }
     header("Location: index.php");
-}
-
-if(filter_has_var(INPUT_POST, "btnImportImg")){
-    ImportImg();
 }
