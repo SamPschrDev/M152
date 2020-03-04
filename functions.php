@@ -1,4 +1,8 @@
 <?php
+if(session_status() == PHP_SESSION_NONE){
+    session_start();
+}
+
 $uploadFolder = 'uploadedFiles';
 
 // Création de l'object PDO (Singleton)
@@ -23,31 +27,76 @@ function addPost($commentaire, $mediaType, $mediaName){
     $db = ConnectDB();
 
     // Table post
-    $sql = "INSERT INTO post (`commentaire`, `creationDate`, `modificationDate`) VALUES(:commentaire, :dateCrea, :dateModif)";
-    $req = $db->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
-    $req->execute(
-      array(
-         'commentaire' => $commentaire,
-         'dateCrea' => date("Y-m-d H:i:s"),
-         'dateModif' => date("Y-m-d H:i:s")
-         )
-     );
-    $id = $db->lastInsertId();
-
-    // Table media
-    $sql = "INSERT INTO media (`typeMedia`, `nomMedia`, `creationDate`, `modificationDate`, `post_idPost`) VALUES(:typeMedia, :nomMedia, :dateCrea, :dateModif, :post)";
-    for ($i=0; $i < count($mediaName); $i++) {
+    try{
+        // permet d'annuler les requêtes executé en cas d'erreur (empêche les données orphelin)
+        $db->beginTransaction();
+        $sql = "INSERT INTO post (`commentaire`, `creationDate`, `modificationDate`) VALUES(:commentaire, :dateCrea, :dateModif)";
         $req = $db->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
         $req->execute(
-            array(
-            'typeMedia' => $mediaType[$i],
-            'nomMedia' => $mediaName[$i],
+        array(
+            'commentaire' => $commentaire,
             'dateCrea' => date("Y-m-d H:i:s"),
-            'dateModif' => date("Y-m-d H:i:s"),
-            'post' => $id
+            'dateModif' => date("Y-m-d H:i:s")
             )
-        );   
-    }    
+        );
+        $id = $db->lastInsertId();
+        $_SESSION["lastInsertId"] = $id;
+
+        // Table media
+        $sql = "INSERT INTO media (`typeMedia`, `nomMedia`, `creationDate`, `modificationDate`, `post_idPost`) VALUES(:typeMedia, :nomMedia, :dateCrea, :dateModif, :post)";
+        for ($i=0; $i < count($mediaName); $i++) {
+            $req = $db->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
+            $req->execute(
+                array(
+                'typeMedia' => $mediaType[$i],
+                'nomMedia' => $mediaName[$i],
+                'dateCrea' => date("Y-m-d H:i:s"),
+                'dateModif' => date("Y-m-d H:i:s"),
+                'post' => $id
+                )
+            );   
+        }
+        // Confirme l'exécution des requêtes
+        $db->commit(); 
+    }
+    catch (Exception $e){
+        // Annule toute les requête situé entre "beginTransaction" et "commit"
+        $db->rollback();
+    }
+    
+        
+}
+
+function GetIdPost(){
+    $db = ConnectDB();
+    $sql = $db->prepare("SELECT idPost FROM post");
+    $sql->execute();
+    $result = $sql->fetchAll(PDO::FETCH_ASSOC);
+    return $result;
+}
+
+function GetPost(){
+    $db = ConnectDB();   
+    $sql = $db->prepare("SELECT idPost, nomMedia, commentaire FROM media JOIN post ON media.post_idPost = post.idPost");
+    $sql->execute();
+    $result = $sql->fetchAll(PDO::FETCH_ASSOC);
+    return $result;
+}
+
+function PostForm(){
+    $post = GetPost();   
+    $div = "<div class=\"col-sm-8\"><div class=\"well\"><div class=\"input-group text-center\" name=\"divImg\">";
+    $currentPostId = 0;
+    foreach ($post as $key => $value) {
+      if($currentPostId != $value["idPost"]){
+            $div .= "<h4>".$value["commentaire"]."</h4>"; 
+            $currentPostId = $value["idPost"];                
+        }
+        $div .= "<img src=\"uploadedFiles/".$value["nomMedia"]."\" name=\"imgPost\">";                                   
+    }
+    $div .="</div></div></div>";
+    
+    return $div;
 }
 
 // Appelle la méthode qui envoie le post dans la base de données
