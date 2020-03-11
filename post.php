@@ -1,4 +1,9 @@
 <?php
+// =======================================
+// Charneco Samuel
+// M152 - I.DA-P4A
+// =======================================
+
     include("functions.php");
 ?>
 
@@ -47,7 +52,7 @@
 												<textarea class="form-control" placeholder="Commentez votre post" name="txtaCommentaire"></textarea>											
 												<input class="btn btn-primary pull-right" type="submit" name="btnPost" value="Poster" style="margin-top: 4%;"/>
 												<input name="userFiles[]" accept="audio/mp3, video/mp4, image/jpeg, image/png, image/gif" type="file" style="margin-top: 5%;" multiple/><br/>
-											</form>										  	
+											</form>
 									  </div>
 								  </div><!-- /col-sm-5 -->
 							</div><!-- /col-9 -->
