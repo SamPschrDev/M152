@@ -15,7 +15,7 @@ function ConnectDB(){
 
     if($db == null){
         try{
-            $db = new PDO('mysql:host=localhost;dbname=M152Facebook;port=3306','root','Super');
+            $db = new PDO('mysql:host=localhost;dbname=m152;port=3306','root','root');
             $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         }
         catch(PDOException $e) {
@@ -26,8 +26,9 @@ function ConnectDB(){
 }
 
 // Insert les données du post dans la base de données
-function addPost($commentaire, $mediaType, $mediaName){
-    $db = ConnectDB();    
+function addPost($commentaire, $filesContent){
+    $db = ConnectDB();   
+    $uniqId = uniqid();
     // Table post
     try{
         // permet d'annuler les requêtes executé en cas d'erreur (empêche les données orphelin)
@@ -42,43 +43,39 @@ function addPost($commentaire, $mediaType, $mediaName){
             )
         );
         $id = $db->lastInsertId();
+        echo $id . "lastinsertid";
         $_SESSION["lastInsertId"] = $id;
 
         // Table media
         $sql = "INSERT INTO media (`typeMedia`, `nomMedia`, `creationDate`, `modificationDate`, `post_idPost`) VALUES(:typeMedia, :nomMedia, :dateCrea, :dateModif, :post)";
-        for ($i=0; $i < count($mediaName); $i++) {
+        foreach ($filesContent["userFiles"]["error"] as $key => $error) {
             $req = $db->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
+            $uniqueFileName = $uniqId.$filesContent["userFiles"]["name"][$key];
+            $uploadFolder = 'uploadedFiles';
             $req->execute(
                 array(
-                'typeMedia' => $mediaType[$i],
-                'nomMedia' => $mediaName[$i],
+                'typeMedia' => $filesContent["userFiles"]["type"][$key],
+                'nomMedia' => $uniqueFileName,
                 'dateCrea' => date("Y-m-d H:i:s"),
                 'dateModif' => date("Y-m-d H:i:s"),
                 'post' => $id
                 )
-            );   
+            );
+            if(!move_uploaded_file($filesContent["userFiles"]["tmp_name"][$key], "$uploadFolder/$uniqueFileName")){
+                throw new Exception();
+            }
+            else{
+                header("Location: index.php");
+            }
         }
-        MoveUpdatedFile();
+        
         // Confirme l'exécution des requêtes
-        $db->commit(); 
+       $db->commit(); 
     }
     catch (Exception $e){
         // Annule toute les requête situé entre "beginTransaction" et "commit"
         $db->rollback();
     }     
-}
-
-function MoveUpdatedFile(){
-    $uploadFolder = 'uploadedFiles';
-    // Déplace le ou les fichiers dans un dossier
-    foreach ($_FILES["userFiles"]["error"] as $key => $error) {
-        if ($error == UPLOAD_ERR_OK) {
-            $tmp_name = $_FILES["userFiles"]["tmp_name"][$key];
-            $name = basename($_FILES["userFiles"]["name"][$key]);               
-            move_uploaded_file($tmp_name, "$uploadFolder/$name");
-        }
-    }
-    header("Location: index.php");
 }
 
 function GetIdPost(){
@@ -124,9 +121,9 @@ function PostForm(){
 // Appelle la méthode qui envoie le post dans la base de données
 if(filter_has_var(INPUT_POST, "btnPost")){
     $commentaire = filter_input(INPUT_POST, "txtaCommentaire", FILTER_SANITIZE_STRING);
-    $typeMedia = $_FILES['userFiles']['type'];
-    $nomMedia = $_FILES['userFiles']['name'];      
-    addPost($commentaire, $typeMedia, $nomMedia);
+    /*$typeMedia = $_FILES['userFiles']['type'];
+    $nomMedia = $_FILES['userFiles']['name'];  */    
+    addPost($commentaire, $_FILES);
 
     // Pour vérifier le type de fichier réel (Lit dans le fichier)
     // Si .exe est renommé en .pdf -> mime_content_type sait que c'est un .exe

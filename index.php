@@ -1,4 +1,4 @@
-<?php
+c je s<?php
 // =======================================
 // Charneco Samuel
 // M152 - I.DA-P4A
@@ -140,7 +140,7 @@
         <script type="text/javascript" src="assets/js/jquery.js"></script>
         <script type="text/javascript" src="assets/js/bootstrap.js"></script>
         <script type="text/javascript">
-        $(document).ready(function() {
+        /*$(document).ready(function() {
 			$('[data-toggle=offcanvas]').click(function() {
 				$(this).toggleClass('visible-xs text-center');
 				$(this).find('i').toggleClass('glyphicon-chevron-right glyphicon-chevron-left');
@@ -149,6 +149,6 @@
 				$('#xs-menu').toggleClass('visible-xs').toggleClass('hidden-xs');
 				$('#btnShow').toggle();
 			});
-        });
+        });*/
         </script>
 </body></html>
