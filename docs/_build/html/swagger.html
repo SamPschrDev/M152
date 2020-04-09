@@ -1,0 +1,437 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Installation et utilisation de Swagger &mdash; preparation-tpi 0.0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Installation et utilisation de readthedocs" href="readthedocs.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> preparation-tpi
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="readthedocs.html">Installation et utilisation de readthedocs</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Installation et utilisation de Swagger</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#mise-en-place-de-swagger-ui">Mise en place de Swagger-UI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#docstring-des-routes">Docstring des routes</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">preparation-tpi</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Installation et utilisation de Swagger</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/swagger.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="installation-et-utilisation-de-swagger">
+<h1>Installation et utilisation de <a class="reference external" href="https://swagger.io/">Swagger</a><a class="headerlink" href="#installation-et-utilisation-de-swagger" title="Permalink to this headline">¶</a></h1>
+<p>Swagger est un outil de documentation automatique d’API. Dans notre cas, nous l’utiliserons pour les routes d’une application Python-Flask.</p>
+<div class="section" id="mise-en-place-de-swagger-ui">
+<h2>Mise en place de Swagger-UI<a class="headerlink" href="#mise-en-place-de-swagger-ui" title="Permalink to this headline">¶</a></h2>
+<p>Assumant que vous avez déjà flask, installez flask_swagger :</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ pip install flask_swagger
+</pre></div>
+</div>
+<p>Prenons un projet flask basique dont la structure est la suivante :</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>project
+├── static
+│   ├── css
+│   │   └── style.css
+│   └── js
+│       └── script.css
+├── template
+│   ├── layout
+│   │   └── layout.html
+│   └── index.html
+└── app.py
+</pre></div>
+</div>
+<p>Notre fichier <code class="docutils literal notranslate"><span class="pre">app.py</span></code> contient une application très basique :</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span><span class="p">,</span> <span class="n">jsonify</span>
+<span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">hello</span><span class="p">():</span>
+    <span class="k">return</span> <span class="s2">&quot;Hello World!&quot;</span>
+
+
+<span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/user&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">hello_name</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;fistname&#39;</span><span class="p">:</span> <span class="s1">&#39;John&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;lastname&#39;</span><span class="p">:</span> <span class="s1">&#39;Doe&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;addresses&#39;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="p">{</span>
+                <span class="s1">&#39;town&#39;</span><span class="p">:</span> <span class="s2">&quot;Geneva&quot;</span>
+            <span class="p">}</span>
+        <span class="p">]</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">jsonify</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Pour implémenter flask_swagger, il faut importer le paquet.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span><span class="p">,</span> <span class="n">jsonify</span>
+<span class="kn">from</span> <span class="nn">flask_swagger</span> <span class="kn">import</span> <span class="n">swagger</span>
+</pre></div>
+</div>
+<p>Il est maintenant nécessaire de créer une route retournant les informations dont swagger à besoin.
+Pour ce faire, voici la route à ajouter (le nom de la route n’est pas imposé) :</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s2">&quot;/specs&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">spec</span><span class="p">():</span>
+    <span class="n">swag</span> <span class="o">=</span> <span class="n">swagger</span><span class="p">(</span><span class="n">app</span><span class="p">)</span>
+    <span class="n">swag</span><span class="p">[</span><span class="s1">&#39;info&#39;</span><span class="p">][</span><span class="s1">&#39;version&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;1.0&quot;</span>
+    <span class="n">swag</span><span class="p">[</span><span class="s1">&#39;info&#39;</span><span class="p">][</span><span class="s1">&#39;title&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;Préparation au TPI&quot;</span>
+    <span class="k">return</span> <span class="n">jsonify</span><span class="p">(</span><span class="n">swag</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Une fois cela fait, il nous faut une page permettant d’afficher la documentation. Dans notre cas, ce sera <code class="docutils literal notranslate"><span class="pre">endpoints.html</span></code>.
+Il nous faut ajouter cette page au dossier <code class="docutils literal notranslate"><span class="pre">template</span></code>.
+Voici la structure du dossier après l’ajout :</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>project
+└── template
+    ├── layout
+    │   └── layout.html
+    └── index.html
+</pre></div>
+</div>
+<p>La page <code class="docutils literal notranslate"><span class="pre">endpoints.html</span></code> est un template se trouvant sur <a class="reference external" href="https://github.com/swagger-api/swagger-ui/blob/master/dist/index.html">ici</a>.
+En plus de la page, il nous faut rajouter quelque fichiers <code class="docutils literal notranslate"><span class="pre">javascript</span></code> dans le dossier <code class="docutils literal notranslate"><span class="pre">projet/static/js/</span></code>. Les voici :</p>
+<ul class="simple">
+<li><a class="reference external" href="https://github.com/swagger-api/swagger-ui/blob/master/dist/swagger-ui-bundle.js">swagger-ui-bundle.js</a></li>
+<li><a class="reference external" href="https://github.com/swagger-api/swagger-ui/blob/master/dist/swagger-ui-standalone-preset.js.map">swagger-ui-standalone-preset.js</a></li>
+</ul>
+<p>Voici la structure du dossier après l’ajout :</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>project
+└── static
+    └── js
+        ├── swagger-ui-bundle.js
+        ├── swagger-ui-standalone-preset.js
+        └── script.css
+</pre></div>
+</div>
+<p>Enfin, la dernière chose à faire est de modifier l’url de récupération de la documentation de swagger.
+Il suffit de se rendre dans la page <code class="docutils literal notranslate"><span class="pre">endpoints.html</span></code> et de modifier la valeur de la clef <code class="docutils literal notranslate"><span class="pre">url</span></code> de l’objet passé en paramètre à <code class="docutils literal notranslate"><span class="pre">SwaggerUIBundle</span></code>.
+Voici à quoi devrait ressembler l’objet <code class="docutils literal notranslate"><span class="pre">SwaggerUIBundle</span></code> après modifications :</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="c1">// Begin Swagger UI call region</span>
+<span class="kr">const</span> <span class="nx">ui</span> <span class="o">=</span> <span class="nx">SwaggerUIBundle</span><span class="p">({</span>
+    <span class="nx">url</span><span class="o">:</span> <span class="s2">&quot;/specs&quot;</span><span class="p">,</span>
+    <span class="nx">dom_id</span><span class="o">:</span> <span class="s1">&#39;#swagger-ui&#39;</span><span class="p">,</span>
+    <span class="nx">deepLinking</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+    <span class="nx">presets</span><span class="o">:</span> <span class="p">[</span>
+        <span class="nx">SwaggerUIBundle</span><span class="p">.</span><span class="nx">presets</span><span class="p">.</span><span class="nx">apis</span><span class="p">,</span>
+        <span class="nx">SwaggerUIStandalonePreset</span>
+    <span class="p">],</span>
+    <span class="nx">plugins</span><span class="o">:</span> <span class="p">[</span>
+        <span class="nx">SwaggerUIBundle</span><span class="p">.</span><span class="nx">plugins</span><span class="p">.</span><span class="nx">DownloadUrl</span>
+    <span class="p">],</span>
+    <span class="nx">layout</span><span class="o">:</span> <span class="s2">&quot;StandaloneLayout&quot;</span>
+<span class="p">});</span>
+<span class="c1">// End Swagger UI call region</span>
+</pre></div>
+</div>
+<p>Votre page de documentation d’API est maintenant configurée et fonctionnelle. Il ne reste plus qu’à documenter les routes !</p>
+</div>
+<div class="section" id="docstring-des-routes">
+<h2>Docstring des routes<a class="headerlink" href="#docstring-des-routes" title="Permalink to this headline">¶</a></h2>
+<p>Prenons la route <code class="docutils literal notranslate"><span class="pre">/user</span></code>, présente dans le fichier <code class="docutils literal notranslate"><span class="pre">app.py</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/user&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">hello_name</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;fistname&#39;</span><span class="p">:</span> <span class="s1">&#39;John&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;lastname&#39;</span><span class="p">:</span> <span class="s1">&#39;Doe&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;addresses&#39;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="p">{</span>
+                <span class="s1">&#39;town&#39;</span><span class="p">:</span> <span class="s2">&quot;Geneva&quot;</span>
+            <span class="p">}</span>
+        <span class="p">]</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">jsonify</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Une docstring possible à mettre est la suivante :</p>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p class="last">Cette façon est très bien pour les route retournant simplement quelque valeure et non pas des objets. Il est préférable d’utiliser la méthode suivante si des object sont envoyés</p>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/user&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">hello_name</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Donne un utilisateur</span>
+<span class="sd">    ---</span>
+<span class="sd">    tags:</span>
+<span class="sd">      - user</span>
+<span class="sd">    responses:</span>
+<span class="sd">      200:</span>
+<span class="sd">        description: Donne un utilisateur</span>
+<span class="sd">        schema:</span>
+<span class="sd">          id: User</span>
+<span class="sd">          properties:</span>
+<span class="sd">            firstname:</span>
+<span class="sd">              type: string</span>
+<span class="sd">            lastname:</span>
+<span class="sd">              type: string</span>
+<span class="sd">            subitems:</span>
+<span class="sd">              type: array</span>
+<span class="sd">              items:</span>
+<span class="sd">                schema:</span>
+<span class="sd">                  id: Address</span>
+<span class="sd">                  properties:</span>
+<span class="sd">                      town:</span>
+<span class="sd">                        type: string</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;fistname&#39;</span><span class="p">:</span> <span class="s1">&#39;John&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;lastname&#39;</span><span class="p">:</span> <span class="s1">&#39;Doe&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;addresses&#39;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="p">{</span>
+                <span class="s1">&#39;town&#39;</span><span class="p">:</span> <span class="s2">&quot;Geneva&quot;</span>
+            <span class="p">}</span>
+        <span class="p">]</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">jsonify</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Une autre possibilité d’ecrire ceci, c’est avec des références de fichier.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/user&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">hello_name</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Donne un utilisateur</span>
+<span class="sd">    ---</span>
+<span class="sd">    tags:</span>
+<span class="sd">      - user</span>
+<span class="sd">    responses:</span>
+<span class="sd">      200:</span>
+<span class="sd">        description: Donne un utilisateur</span>
+<span class="sd">        schema:</span>
+<span class="sd">          id: User</span>
+<span class="sd">          $ref: &#39;/static/swagger-components/User.yml#/User&#39;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;fistname&#39;</span><span class="p">:</span> <span class="s1">&#39;John&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;lastname&#39;</span><span class="p">:</span> <span class="s1">&#39;Doe&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;addresses&#39;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="p">{</span>
+                <span class="s1">&#39;town&#39;</span><span class="p">:</span> <span class="s2">&quot;Geneva&quot;</span>
+            <span class="p">}</span>
+        <span class="p">]</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">jsonify</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Le contenu des fichier mis par référence est le suivant :</p>
+<ul class="simple">
+<li>Pour <code class="docutils literal notranslate"><span class="pre">/static/swagger-components/User.yml</span></code> :</li>
+</ul>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">User</span><span class="p">:</span>
+  <span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">object</span>
+  <span class="nt">properties</span><span class="p">:</span>
+    <span class="nt">firstname</span><span class="p">:</span>
+      <span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">string</span>
+    <span class="nt">lastname</span><span class="p">:</span>
+      <span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">string</span>
+    <span class="nt">subitems</span><span class="p">:</span>
+      <span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">array</span>
+      <span class="nt">items</span><span class="p">:</span>
+        <span class="nt">$ref</span><span class="p">:</span> <span class="s">&#39;/static/swagger-components/Address.yml#/Address&#39;</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>Pour <code class="docutils literal notranslate"><span class="pre">/static/swagger-components/Address.yml</span></code> :</li>
+</ul>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">Address</span><span class="p">:</span>
+  <span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">object</span>
+  <span class="nt">properties</span><span class="p">:</span>
+  <span class="nt">town</span><span class="p">:</span>
+    <span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">string</span>
+</pre></div>
+</div>
+<p>Les fichiers de références se trouvent dans le dossier <code class="docutils literal notranslate"><span class="pre">static</span></code> et dans le sous-dossier <code class="docutils literal notranslate"><span class="pre">swagger-components</span></code>, dont voici la structure :</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>project
+└── static
+    └── swagger-components
+        ├── User.yml
+        └── Address.yml
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="readthedocs.html" class="btn btn-neutral float-left" title="Installation et utilisation de readthedocs" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Tanguy Cavagna
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

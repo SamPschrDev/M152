@@ -1,0 +1,17 @@
+Bienvenue sur la documentation de preparation-tpi
+=================================================
+
+.. toctree::
+   :maxdepth: 2
+
+   readthedocs
+   swagger
+
+Cette documentation à pour but d'aider à l'installation de sphinx pour la mise en ligne de la documentation ainsi que Swagger pour la documentation d'API.
+
+Indices and tables
+==================
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`

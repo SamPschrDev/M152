@@ -1,0 +1,269 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Installation et utilisation de readthedocs &mdash; preparation-tpi 0.0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Installation et utilisation de Swagger" href="swagger.html" />
+    <link rel="prev" title="Bienvenue sur la documentation de preparation-tpi" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> preparation-tpi
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Installation et utilisation de readthedocs</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#quick-start">Quick start</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#changement-de-theme">Changement de thème</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#mise-en-ligne-de-la-documentation">Mise en ligne de la documentation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="swagger.html">Installation et utilisation de Swagger</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">preparation-tpi</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Installation et utilisation de readthedocs</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/readthedocs.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="installation-et-utilisation-de-readthedocs">
+<h1>Installation et utilisation de <a class="reference external" href="http://readthedocs.org">readthedocs</a><a class="headerlink" href="#installation-et-utilisation-de-readthedocs" title="Permalink to this headline">¶</a></h1>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Ayant testé que sur linux, je donne la marche a suivre pour linux (ou WSL)</p>
+</div>
+<div class="section" id="quick-start">
+<h2>Quick start<a class="headerlink" href="#quick-start" title="Permalink to this headline">¶</a></h2>
+<p>Assumant que vous avez déjà Python d’installé, installez sphinx :</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ pip install python3-sphinx
+</pre></div>
+</div>
+<p>Créer un dossier dans votre projet pour contenir la documentation :</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">cd</span> /chemin/du/projet
+$ mkdir docs
+</pre></div>
+</div>
+<p>Lancé la commande <code class="docutils literal notranslate"><span class="pre">sphinx-quickstart</span></code> ici :</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">cd</span> docs
+$ sphinx-quickstart
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p>Si la commande n’est pas trouvée, c’est qu’elle n’est pas dans le <code class="docutils literal notranslate"><span class="pre">path</span></code>. Pour contourner ce soucis, vous pouvez trouver l’endroit dans lequel le script c’est installer et lancé directement le chemin absolue. En général, si le script n’est pas dans le path, il est dans <code class="docutils literal notranslate"><span class="pre">~/.local/bin/</span></code>. Faites alors :</p>
+<div class="last highlight-bash notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">cd</span> docs
+$ ~/.local/bin/sphinx-quickstart
+</pre></div>
+</div>
+</div>
+<p>Cette commande est un wizard qui va vous aider à faire une configuration basique de la documentation; dans la plupart des
+cas vous avez juste à accepter les options par défaut. Quand tout est terminer, vous aurez un fichier <code class="docutils literal notranslate"><span class="pre">index.rst</span></code>, <code class="docutils literal notranslate"><span class="pre">conf.py</span></code> et pleins d’autres fichiers.</p>
+<p>Une fois que les fichiers on été généré dans le dossier docs, ouvrez le fichier Makefile et regarder pour la ligne 6 où
+la constante <code class="docutils literal notranslate"><span class="pre">SPHINXBUILD</span></code> est déclarée. Si besoin, il faudra modifier sa valeur avec le chemin absolu de la commande <code class="docutils literal notranslate"><span class="pre">sphinx-build</span></code> se trouvant
+au même endroit que la commande <code class="docutils literal notranslate"><span class="pre">sphinx-quickstart</span></code>.</p>
+<p>Maintenant, pour générer la documentation, lancé la commande :</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ make html
+</pre></div>
+</div>
+<p>Le fichier <code class="docutils literal notranslate"><span class="pre">index.rst</span></code> à été générer dans <code class="docutils literal notranslate"><span class="pre">index.html</span></code> dans le fichier de sortie de la documentation (généralement <code class="docutils literal notranslate"><span class="pre">_build/html/index.html</span></code>).
+Ouvrez ce fichier dans votre navigateur pour voir votre doc.</p>
+</div>
+<div class="section" id="changement-de-theme">
+<h2>Changement de thème<a class="headerlink" href="#changement-de-theme" title="Permalink to this headline">¶</a></h2>
+<p>Si vous souhaitez changer de thème pour votre documentation, je vous propose celui de readthedocs. Voici comment l’installer.</p>
+<p>Premièrement, il vous faut install le paquet python suivant :</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ pip install sphinx_rtd_theme
+</pre></div>
+</div>
+<p>Une fois fait, il suffit de rajouter l’import dans le fichier <code class="docutils literal notranslate"><span class="pre">conf.py</span></code> :</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sphinx_rtd_theme</span>
+</pre></div>
+</div>
+<p>Et enfin, rajouter l’extension <code class="docutils literal notranslate"><span class="pre">sphinx_rtd_theme</span></code> dans le tableau <code class="docutils literal notranslate"><span class="pre">extensions</span></code> du fichier <code class="docutils literal notranslate"><span class="pre">conf.py</span></code> et modifier la valeur de la variable <code class="docutils literal notranslate"><span class="pre">html_theme</span></code> pour <code class="docutils literal notranslate"><span class="pre">sphinx_rtd_theme</span></code>.</p>
+</div>
+<div class="section" id="mise-en-ligne-de-la-documentation">
+<h2>Mise en ligne de la documentation<a class="headerlink" href="#mise-en-ligne-de-la-documentation" title="Permalink to this headline">¶</a></h2>
+<p>Le site utiliser pour mettre en ligne la documentation est <a class="reference external" href="http://readthedocs.org">http://readthedocs.org</a>. Ce site permet de se connecter via votre compte GitHub et ainsi
+avoir accès et tous vos repositories.
+De ce fait, il est possible d’importer des projets directement dans readthedocs et ainsi héberger la documentation.
+Pour mettre à jour documentation, il vous faut aller dans l’onglet <code class="docutils literal notranslate"><span class="pre">Aperçu</span></code> de votre projet. Cliquer sur le bouton <code class="docutils literal notranslate"><span class="pre">Complier</span> <span class="pre">une</span> <span class="pre">version</span></code> et le tour est joué.
+Enfin, pour consulter ce qui à été compiler, il suffit de cliquer sur le bouton vert <code class="docutils literal notranslate"><span class="pre">Afficher</span> <span class="pre">les</span> <span class="pre">Docs</span></code>.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="swagger.html" class="btn btn-neutral float-right" title="Installation et utilisation de Swagger" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral float-left" title="Bienvenue sur la documentation de preparation-tpi" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Tanguy Cavagna
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
